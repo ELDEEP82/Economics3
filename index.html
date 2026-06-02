@@ -62,9 +62,12 @@
   /* Chapter selector */
   .chapter-selector {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
     margin-bottom: 20px;
+  }
+  @media (max-width: 520px) {
+    .chapter-selector { grid-template-columns: 1fr; }
   }
   .chapter-card {
     background: var(--surface);
@@ -85,6 +88,9 @@
   .chapter-card .ch-sub { font-size: 11px; color: var(--text-muted); }
   .chapter-card.ch4 .ch-title { color: var(--purple); }
   .chapter-card.ch4.active { border-color: var(--purple); background: linear-gradient(135deg,rgba(168,85,247,0.1),rgba(59,130,246,0.06)); }
+  .chapter-card.ch1 .ch-title { color: var(--green); }
+  .chapter-card.ch1.active { border-color: var(--green); background: linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.06)); }
+  .ch-badge-1 { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
 
   /* Stats bar */
   .stats-bar {
@@ -271,13 +277,18 @@
 
   <!-- Header -->
   <div class="header">
-    <div class="badge">📚مراجعه اقتصاد كلي  </div>
-    <h1>اختبار الفصلين الثالث والرابع</h1>
+    <div class="badge">📚 مراجعة اقتصاد كلي — فرقة ثالثة</div>
+    <h1>اختبار الفصول الدراسية</h1>
     <p>اختر الفصل الذي تريد مراجعته أو اختبر نفسك على الكل</p>
   </div>
 
   <!-- Chapter selector -->
   <div class="chapter-selector" id="chapterSelector">
+    <div class="chapter-card ch1" id="cardCh1" onclick="selectChapter(1)">
+      <div class="ch-icon">📊</div>
+      <div class="ch-title" style="color:var(--green)">الفصل الأول</div>
+      <div class="ch-sub">الناتج والدخل القومي<br>27 سؤال</div>
+    </div>
     <div class="chapter-card active" id="cardCh3" onclick="selectChapter(3)">
       <div class="ch-icon">🏦</div>
       <div class="ch-title">الفصل الثالث</div>
@@ -346,6 +357,43 @@
 </div>
 
 <script>
+// ==================== DATA: CHAPTER 1 ====================
+const ch1_tf = [
+  { id:201, ch:1, type:'tf', text:'الناتج المحلي الإجمالي (GDP) يحسب قيمة السلع والخدمات بناءً على جنسية القائمين على الإنتاج.', answer:false, explanation:'يحسب بناءً على الإنتاج داخل الحدود الجغرافية للدولة بغض النظر عن جنسية القائمين عليه.' },
+  { id:202, ch:1, type:'tf', text:'الناتج القومي الإجمالي (GNP) يهتم بالإنتاج باستخدام عناصر إنتاج وطنية سواء داخل البلد أو خارجها.', answer:true, explanation:'صحيح.' },
+  { id:203, ch:1, type:'tf', text:'"الإنتاج القومي" يقع في فخ التكرار الحسابي لأنه لا يستبعد السلع الوسيطة.', answer:true, explanation:'صحيح، وهذا هو الفرق بين الإنتاج القومي والناتج القومي.' },
+  { id:204, ch:1, type:'tf', text:'تُحسب مدفوعات التحويلات (مثل المعاشات وإعانات البطالة) ضمن الناتج القومي لأنها تعكس إنتاجاً جارياً.', answer:false, explanation:'تستبعد تماماً لأنها لا تعكس أي إنتاج جاري، بل هي مجرد تحويل للإيرادات الحكومية.' },
+  { id:205, ch:1, type:'tf', text:'الاستهلاك الشخصي للمزارع والصياد من إنتاجهما يُستثنى من الحساب ولا يدخل في الناتج القومي.', answer:false, explanation:'يُحسب ويدخل في الناتج القومي على أساس أسعار مثيلاتها في السوق رغم أنها عمليات غير سوقية.' },
+  { id:206, ch:1, type:'tf', text:'وفقاً لطريقة الإنفاق، يتم إضافة المسحوب من المخزون السلعي إلى الناتج، ويُطرح المضاف إليه.', answer:false, explanation:'الإضافة للمخزون تُضاف للناتج، والسحب منه يُطرح.' },
+  { id:207, ch:1, type:'tf', text:'أرباح الشركات المساهمة تنقسم إلى ضرائب دخل، وأرباح أسهم، وأرباح محتجزة.', answer:true, explanation:'صحيح.' },
+  { id:208, ch:1, type:'tf', text:'القيمة التقديرية للمساكن التي يقطنها أصحابها تُحسب ضمن بند "الريع" في طريقة الدخل.', answer:true, explanation:'صحيح.' },
+  { id:209, ch:1, type:'tf', text:'الناتج القومي بسعر التكلفة يحتوي على الضرائب غير المباشرة مطروحاً منها الإعانات.', answer:false, explanation:'الناتج القومي بسعر السوق هو الذي يحتوي على الضرائب غير المباشرة مطروحاً منها الإعانات، بينما سعر التكلفة يعبر عن ما دُفع فعلياً لعناصر الإنتاج.' },
+  { id:210, ch:1, type:'tf', text:'الدخل المتصرف فيه هو الدخل الشخصي بعد دفع الضرائب المباشرة على الدخل.', answer:true, explanation:'صحيح.' },
+  { id:211, ch:1, type:'tf', text:'الظروف الطبيعية (كالزلازل والفيضانات) لا تؤثر على حجم الناتج القومي الإجمالي لأنها خارجة عن إرادة الإنسان.', answer:false, explanation:'الظروف الطبيعية تُعد من أهم العوامل المحددة لحجم الناتج القومي لأنها تؤثر على الإنتاج.' },
+  { id:212, ch:1, type:'tf', text:'تشمل "الأجور" في حساب الدخل القومي الحوافز والمكافآت والبدلات، بالإضافة إلى معاشات الضمان الاجتماعي.', answer:false, explanation:'تُحسب الحوافز والمكافآت والبدلات، ولكن يُستثنى منها تعويضات العاملين ومعاشات الضمان الاجتماعي.' },
+  { id:213, ch:1, type:'tf', text:'الأرباح المحتجزة هي جزء من أرباح الشركات المساهمة يتم توزيعه فوراً على المساهمين.', answer:false, explanation:'الأرباح المحتجزة لا توزع، بل تُحتجز لمواجهة التزامات أو للتوسع في الشركة.' },
+  { id:214, ch:1, type:'tf', text:'العوائد التي يحصل عليها أصحاب براءات الاختراع أو حقوق التأليف تُصنف اقتصادياً ضمن بند "الريع".', answer:true, explanation:'صحيح.' },
+  { id:215, ch:1, type:'tf', text:'يتضمن "الإنفاق الحكومي" جميع القيم النقدية للسلع والخدمات بما في ذلك مدفوعات التحويلات.', answer:false, explanation:'يتم حساب السلع والخدمات التي تشتريها الحكومة مع استبعاد مدفوعات التحويلات.' },
+  { id:216, ch:1, type:'tf', text:'الناتج القومي الإجمالي يساوي الناتج المحلي الإجمالي مطروحاً منه صافي عوائد عناصر الإنتاج من الخارج.', answer:false, explanation:'الناتج القومي الإجمالي = الناتج المحلي الإجمالي + صافي عوائد عناصر الإنتاج من الخارج.' }
+];
+
+const ch1_mc = [
+  { id:217, ch:1, type:'mc', text:'القيمة الصافية والنهائية للسلع والخدمات الموجهة للاستخدام المباشر والتي تُحسب باستبعاد السلع الوسيطة هي:', options:['الإنتاج القومي','الناتج القومي','الدخل القومي','الناتج المحلي'], answer:1, explanation:'الناتج القومي هو القيمة الصافية النهائية باستبعاد السلع الوسيطة.' },
+  { id:218, ch:1, type:'mc', text:'للوصول إلى "الناتج القومي الإجمالي" من خلال "الناتج المحلي الإجمالي"، نقوم بجمع الناتج المحلي مع:', options:['الإعانات الحكومية','الضرائب غير المباشرة','صافي عوائد عناصر الإنتاج من الخارج','إهلاك رأس المال'], answer:2, explanation:'GNP = GDP + صافي عوائد عناصر الإنتاج من الخارج.' },
+  { id:219, ch:1, type:'mc', text:'المعادلة الصحيحة لحساب "القيمة المضافة" هي:', options:['قيمة الإنتاج للمشروع + مستلزمات الإنتاج','قيمة الإنتاج للمشروع - مستلزمات الإنتاج','الأرباح + الأجور','الاستثمار الإجمالي - إهلاك رأس المال'], answer:1, explanation:'القيمة المضافة = قيمة الإنتاج - مستلزمات الإنتاج.' },
+  { id:220, ch:1, type:'mc', text:'في طريقة الإنفاق، يمثل الإنفاق الاستثماري مجموع القيم النقدية للسلع الرأسمالية ويتضمن:', options:['الشراء النهائي للمعدات والآلات والمباني','التغير في المخزون السلعي','(أ) و(ب) معاً','مدفوعات التحويلات'], answer:2, explanation:'يشمل شراء المعدات والآلات والمباني + التغير في المخزون السلعي.' },
+  { id:221, ch:1, type:'mc', text:'المعادلة العامة لحساب الناتج القومي الإجمالي بطريقة الإنفاق هي:', options:['GNP = C + I + G + (X - M)','GNP = C + I - G','GNP = C + I + (X + M)','GNP = C - I + G'], answer:0, explanation:'GNP = C + I + G + (X - M)' },
+  { id:222, ch:1, type:'mc', text:'الدخل من نشاط المؤسسات الفردية والبسيطة يُصنف ضمن بند "الأرباح" تحت مسمى:', options:['الأرباح المحتجزة','دخل الملاك','أرباح الأسهم','الريع'], answer:1, explanation:'دخل الملاك هو الدخل من نشاط المؤسسات الفردية.' },
+  { id:223, ch:1, type:'mc', text:'يمكن حساب "الدخل الشخصي" عن طريق:', options:['الدخل القومي - مدفوعات التحويلات','الدخل المتصرف فيه + الضرائب المباشرة','الدخل القومي + مدفوعات التحويلات - (الضرائب على الأرباح + الأرباح المحتجزة + المعاشات)','الناتج القومي بسعر السوق - الإعانات'], answer:2, explanation:'الدخل الشخصي = الدخل القومي + مدفوعات التحويلات - (ضرائب أرباح + أرباح محتجزة + معاشات).' },
+  { id:224, ch:1, type:'mc', text:'من العوامل المحددة لحجم الناتج القومي الإجمالي:', options:['الاستقرار السياسي للدولة','كمية ونوعية الموارد الاقتصادية','الظروف الطبيعية','جميع ما سبق'], answer:3, explanation:'جميع ما سبق.' },
+  { id:225, ch:1, type:'mc', text:'الدخل الذي يمكن للفرد التصرف فيه بإنفاقه على الاستهلاك والادخار يُعرف بـ:', options:['الدخل القومي','الدخل الشخصي','الدخل المتصرف فيه','الناتج القومي بسعر التكلفة'], answer:2, explanation:'الدخل المتصرف فيه = الدخل الشخصي - الضرائب المباشرة.' },
+  { id:226, ch:1, type:'mc', text:'أي مما يلي يُستبعد تماماً عند حساب "الأجور" بطريقة الدخل؟', options:['مقابل الخدمات البدنية والذهنية','الحوافز والمكافآت','البدلات','تعويضات العاملين ومعاشات الضمان الاجتماعي'], answer:3, explanation:'تعويضات العاملين ومعاشات الضمان الاجتماعي تُستبعد.' },
+  { id:227, ch:1, type:'mc', text:'للوصول إلى "صافي الناتج القومي بسعر السوق"، يجب طرح ماذا من "الناتج القومي الإجمالي"؟', options:['الضرائب غير المباشرة','إهلاك رأس المال','الإعانات الحكومية','الأرباح المحتجزة'], answer:1, explanation:'صافي الناتج القومي = الناتج القومي الإجمالي - إهلاك رأس المال.' },
+  { id:228, ch:1, type:'mc', text:'شراء سلع معمرة كالسيارات وسلع غير معمرة كالمأكل بواسطة الأفراد يُعد جزءاً من:', options:['الإنفاق الاستثماري','الإنفاق الحكومي','الإنفاق الاستهلاكي','صافي التجارة الخارجية'], answer:2, explanation:'الإنفاق الاستهلاكي C.' },
+  { id:229, ch:1, type:'mc', text:'أي من المكونات التالية يمثل إنفاق "قطاع العالم الخارجي"؟', options:['الضرائب والرسوم الجمركية','الاستثمار الصافي','الصادرات ناقص الواردات (X - M)','الإعانات الحكومية'], answer:2, explanation:'(X - M) = صافي الصادرات.' },
+  { id:230, ch:1, type:'mc', text:'الجزء من أرباح الشركات المساهمة الذي يُستخدم لمواجهة الالتزامات المستقبلية أو التوسع في النشاط هو:', options:['أرباح الأسهم','ضرائب دخل الشركات','الأرباح المحتجزة','دخل الملاك'], answer:2, explanation:'الأرباح المحتجزة.' }
+];
+
 // ==================== DATA: CHAPTER 3 ====================
 const ch3_tf = [
   { id:1, ch:3, type:'tf', text:'السياسة المالية هي مجموعة الإجراءات التي يتخذها البنك المركزي لإدارة النشاط الاقتصادي.', answer:false, explanation:'السياسة المالية تتخذها الحكومة وليس البنك المركزي.' },
@@ -448,6 +496,7 @@ let reviewMode = false;
 // ==================== CHAPTER LOGIC ====================
 function selectChapter(ch) {
   currentChapter = ch;
+  document.getElementById('cardCh1').classList.toggle('active', ch === 1);
   document.getElementById('cardCh3').classList.toggle('active', ch === 3);
   document.getElementById('cardCh4').classList.toggle('active', ch === 4);
   document.getElementById('mainContainer').classList.toggle('ch4-mode', ch === 4);
@@ -469,16 +518,20 @@ function updateTabButtons() {
 }
 
 function getQuestions() {
-  const tfPool = currentChapter === 3 ? ch3_tf : ch4_tf;
-  const mcPool = currentChapter === 3 ? ch3_mc : ch4_mc;
+  let tfPool, mcPool;
+  if (currentChapter === 1) { tfPool = ch1_tf; mcPool = ch1_mc; }
+  else if (currentChapter === 3) { tfPool = ch3_tf; mcPool = ch3_mc; }
+  else { tfPool = ch4_tf; mcPool = ch4_mc; }
   if (currentType === 'tf') return [...tfPool];
   if (currentType === 'mc') return [...mcPool];
   return [...tfPool, ...mcPool];
 }
 
 function updateTabCounts() {
-  const tfPool = currentChapter === 3 ? ch3_tf : ch4_tf;
-  const mcPool = currentChapter === 3 ? ch3_mc : ch4_mc;
+  let tfPool, mcPool;
+  if (currentChapter === 1) { tfPool = ch1_tf; mcPool = ch1_mc; }
+  else if (currentChapter === 3) { tfPool = ch3_tf; mcPool = ch3_mc; }
+  else { tfPool = ch4_tf; mcPool = ch4_mc; }
   document.getElementById('tabTF').textContent = `✓ صح أم خطأ (${tfPool.length})`;
   document.getElementById('tabMC').textContent = `● اختيار متعدد (${mcPool.length})`;
   document.getElementById('tabAll').textContent = `📋 الكل (${tfPool.length + mcPool.length})`;
@@ -505,7 +558,8 @@ function renderQuestion() {
   const answered = userAnswer !== undefined;
   updateProgress();
 
-  const chLabel = `الفصل ${q.ch === 3 ? 'الثالث' : 'الرابع'}`;
+  const chNames = {1:'الأول', 3:'الثالث', 4:'الرابع'};
+  const chLabel = `الفصل ${chNames[q.ch] || q.ch}`;
   const chClass = `ch-badge-${q.ch}`;
 
   let html = `<div class="question-card ${answered ? (isCorrect(q, userAnswer) ? 'answered-correct' : 'answered-wrong') : ''}">`;
@@ -646,7 +700,7 @@ function goHome() {
 }
 
 // ==================== START ====================
-selectChapter(3);
+selectChapter(1);
 </script>
 </body>
 </html>
