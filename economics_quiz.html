@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختبار الاقتصاد - السياسة المالية والنقدية</title>
+<title>اختبار الاقتصاد - الفصلين الثالث والرابع</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,13 +15,12 @@
     --gold: #f59e0b;
     --green: #10b981;
     --red: #ef4444;
+    --purple: #a855f7;
     --text: #f1f5f9;
     --text-muted: #94a3b8;
     --border: #1e2d45;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Cairo', sans-serif;
     background: var(--bg);
@@ -29,88 +28,82 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* Animated background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background: radial-gradient(ellipse at 20% 20%, rgba(59,130,246,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 50%);
+                radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.06) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
-
-  .container {
-    max-width: 820px;
-    margin: 0 auto;
-    padding: 24px 16px;
-    position: relative;
-    z-index: 1;
-  }
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; position: relative; z-index: 1; }
 
   /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    animation: fadeDown 0.6s ease;
-  }
-
+  .header { text-align: center; margin-bottom: 28px; animation: fadeDown 0.6s ease; }
   .header .badge {
     display: inline-block;
-    background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(6,182,212,0.2));
+    background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(168,85,247,0.2));
     border: 1px solid rgba(59,130,246,0.3);
     color: var(--accent2);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
+    font-size: 12px; font-weight: 600;
+    padding: 5px 16px; border-radius: 20px;
+    margin-bottom: 10px; letter-spacing: 1px;
   }
-
   .header h1 {
     font-family: 'Tajawal', sans-serif;
-    font-size: clamp(22px, 4vw, 32px);
-    font-weight: 800;
+    font-size: clamp(20px, 4vw, 30px); font-weight: 800;
     background: linear-gradient(135deg, var(--text), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 6px;
   }
+  .header p { color: var(--text-muted); font-size: 13px; }
 
-  .header p {
-    color: var(--text-muted);
-    font-size: 14px;
+  /* Chapter selector */
+  .chapter-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
   }
+  @media (max-width: 520px) {
+    .chapter-selector { grid-template-columns: 1fr; }
+  }
+  .chapter-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+  .chapter-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .chapter-card.active {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.08));
+  }
+  .chapter-card .ch-icon { font-size: 28px; margin-bottom: 8px; }
+  .chapter-card .ch-title { font-family: 'Tajawal',sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .chapter-card .ch-sub { font-size: 11px; color: var(--text-muted); }
+  .chapter-card.ch4 .ch-title { color: var(--purple); }
+  .chapter-card.ch4.active { border-color: var(--purple); background: linear-gradient(135deg,rgba(168,85,247,0.1),rgba(59,130,246,0.06)); }
+  .chapter-card.ch1 .ch-title { color: var(--green); }
+  .chapter-card.ch1.active { border-color: var(--green); background: linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.06)); }
+  .ch-badge-1 { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
 
   /* Stats bar */
   .stats-bar {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 28px;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: flex; gap: 10px; margin-bottom: 20px;
+    justify-content: center; flex-wrap: wrap;
   }
-
   .stat-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
+    display: flex; align-items: center; gap: 7px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 9px 14px;
+    font-size: 13px; font-weight: 600;
   }
-
-  .stat-chip .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
-
+  .stat-chip .dot { width: 7px; height: 7px; border-radius: 50%; }
   .dot-blue { background: var(--accent); }
   .dot-gold { background: var(--gold); }
   .dot-green { background: var(--green); }
@@ -118,464 +111,194 @@
 
   /* Section tabs */
   .section-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 6px;
+    display: flex; gap: 6px; margin-bottom: 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 5px;
   }
-
   .tab-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: transparent;
-    color: var(--text-muted);
-    font-family: 'Cairo', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
+    flex: 1; padding: 9px 6px; border: none; border-radius: 10px;
+    background: transparent; color: var(--text-muted);
+    font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.25s; white-space: nowrap;
   }
-
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-  }
+  .tab-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+  .ch4-mode .tab-btn.active { background: linear-gradient(135deg, var(--purple), var(--accent)); }
 
   /* Progress */
-  .progress-wrap {
-    margin-bottom: 24px;
-  }
+  .progress-wrap { margin-bottom: 22px; }
+  .progress-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 7px; font-weight: 600; }
+  .progress-bar { height: 5px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 10px; transition: width 0.4s cubic-bezier(.4,0,.2,1); }
+  .ch4-mode .progress-fill { background: linear-gradient(90deg, var(--purple), var(--accent)); }
 
-  .progress-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    font-weight: 600;
+  /* Chapter badge on question */
+  .ch-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; margin-bottom: 4px;
   }
-
-  .progress-bar {
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    transition: width 0.4s cubic-bezier(.4,0,.2,1);
-  }
+  .ch-badge-3 { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.25); }
+  .ch-badge-4 { background: rgba(168,85,247,0.15); color: var(--purple); border: 1px solid rgba(168,85,247,0.25); }
 
   /* Question card */
   .question-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    margin-bottom: 18px;
-    animation: slideUp 0.35s ease;
-    transition: border-color 0.3s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 26px; margin-bottom: 16px;
+    animation: slideUp 0.35s ease; transition: border-color 0.3s;
   }
+  .question-card.answered-correct { border-color: rgba(16,185,129,0.4); background: linear-gradient(135deg, var(--surface), rgba(16,185,129,0.04)); }
+  .question-card.answered-wrong { border-color: rgba(239,68,68,0.4); background: linear-gradient(135deg, var(--surface), rgba(239,68,68,0.04)); }
 
-  .question-card.answered-correct {
-    border-color: rgba(16,185,129,0.4);
-    background: linear-gradient(135deg, var(--surface), rgba(16,185,129,0.04));
-  }
-
-  .question-card.answered-wrong {
-    border-color: rgba(239,68,68,0.4);
-    background: linear-gradient(135deg, var(--surface), rgba(239,68,68,0.04));
-  }
-
-  .q-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 22px;
-  }
-
+  .q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
   .q-number {
-    min-width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    min-width: 34px; height: 34px; border-radius: 10px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
   }
+  .ch4-mode .q-number { background: linear-gradient(135deg, var(--purple), var(--accent)); }
 
-  .q-type-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    display: inline-block;
-  }
+  .q-type-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 5px; margin-bottom: 5px; display: inline-block; margin-left: 4px; }
+  .badge-tf { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+  .badge-mc { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.25); }
+  .q-text { font-size: 15px; line-height: 1.75; font-weight: 600; }
 
-  .badge-tf {
-    background: rgba(245,158,11,0.15);
-    color: var(--gold);
-    border: 1px solid rgba(245,158,11,0.25);
-  }
-
-  .badge-mc {
-    background: rgba(59,130,246,0.15);
-    color: var(--accent);
-    border: 1px solid rgba(59,130,246,0.25);
-  }
-
-  .q-text {
-    font-size: 16px;
-    line-height: 1.7;
-    font-weight: 600;
-  }
-
-  /* True/False buttons */
-  .tf-buttons {
-    display: flex;
-    gap: 10px;
-  }
-
+  /* TF */
+  .tf-buttons { display: flex; gap: 10px; }
   .tf-btn {
-    flex: 1;
-    padding: 14px;
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    background: var(--surface2);
-    color: var(--text);
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    flex: 1; padding: 13px; border: 2px solid var(--border); border-radius: 14px;
+    background: var(--surface2); color: var(--text);
+    font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
   }
-
-  .tf-btn:hover:not(:disabled) {
-    border-color: var(--accent);
-    background: rgba(59,130,246,0.08);
-    transform: translateY(-1px);
-  }
-
+  .tf-btn:hover:not(:disabled) { border-color: var(--accent); background: rgba(59,130,246,0.08); transform: translateY(-1px); }
   .tf-btn:disabled { cursor: default; }
+  .tf-btn.selected-correct { border-color: var(--green); background: rgba(16,185,129,0.12); color: var(--green); }
+  .tf-btn.selected-wrong { border-color: var(--red); background: rgba(239,68,68,0.12); color: var(--red); }
+  .tf-btn.reveal-correct { border-color: var(--green); background: rgba(16,185,129,0.07); color: var(--green); }
 
-  .tf-btn.selected-correct {
-    border-color: var(--green);
-    background: rgba(16,185,129,0.12);
-    color: var(--green);
-  }
-
-  .tf-btn.selected-wrong {
-    border-color: var(--red);
-    background: rgba(239,68,68,0.12);
-    color: var(--red);
-  }
-
-  .tf-btn.reveal-correct {
-    border-color: var(--green);
-    background: rgba(16,185,129,0.08);
-    color: var(--green);
-  }
-
-  /* MCQ options */
-  .mc-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  /* MCQ */
+  .mc-options { display: flex; flex-direction: column; gap: 9px; }
   .mc-option {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 18px;
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    background: var(--surface2);
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: right;
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; border: 2px solid var(--border);
+    border-radius: 13px; background: var(--surface2);
+    cursor: pointer; transition: all 0.2s; text-align: right;
   }
-
-  .mc-option:hover:not(.disabled) {
-    border-color: var(--accent);
-    background: rgba(59,130,246,0.06);
-    transform: translateX(-2px);
-  }
-
+  .mc-option:hover:not(.disabled) { border-color: var(--accent); background: rgba(59,130,246,0.06); transform: translateX(-2px); }
   .mc-option.disabled { cursor: default; }
-
-  .mc-option.selected-correct {
-    border-color: var(--green);
-    background: rgba(16,185,129,0.1);
-  }
-
-  .mc-option.selected-wrong {
-    border-color: var(--red);
-    background: rgba(239,68,68,0.1);
-  }
-
-  .mc-option.reveal-correct {
-    border-color: var(--green);
-    background: rgba(16,185,129,0.06);
-  }
-
+  .mc-option.selected-correct { border-color: var(--green); background: rgba(16,185,129,0.1); }
+  .mc-option.selected-wrong { border-color: var(--red); background: rgba(239,68,68,0.1); }
+  .mc-option.reveal-correct { border-color: var(--green); background: rgba(16,185,129,0.06); }
   .option-letter {
-    min-width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
+    min-width: 30px; height: 30px; border-radius: 7px;
+    background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+    border: 1px solid var(--border); transition: all 0.2s;
   }
-
   .selected-correct .option-letter { background: rgba(16,185,129,0.3); border-color: var(--green); }
   .selected-wrong .option-letter { background: rgba(239,68,68,0.3); border-color: var(--red); }
   .reveal-correct .option-letter { background: rgba(16,185,129,0.2); border-color: var(--green); }
-
-  .option-text {
-    font-size: 14px;
-    font-weight: 500;
-    flex: 1;
-    line-height: 1.5;
-  }
+  .option-text { font-size: 13px; font-weight: 500; flex: 1; line-height: 1.5; }
 
   /* Feedback */
   .feedback {
-    margin-top: 16px;
-    padding: 14px 18px;
-    border-radius: 12px;
-    font-size: 14px;
-    line-height: 1.7;
-    font-weight: 500;
-    display: none;
-    animation: fadeIn 0.3s ease;
+    margin-top: 14px; padding: 13px 16px; border-radius: 11px;
+    font-size: 13px; line-height: 1.7; font-weight: 500;
+    display: none; animation: fadeIn 0.3s ease;
   }
-
   .feedback.show { display: block; }
+  .feedback.correct { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: #6ee7b7; }
+  .feedback.wrong { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+  .feedback-icon { font-size: 15px; margin-left: 5px; }
 
-  .feedback.correct {
-    background: rgba(16,185,129,0.1);
-    border: 1px solid rgba(16,185,129,0.25);
-    color: #6ee7b7;
-  }
-
-  .feedback.wrong {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.25);
-    color: #fca5a5;
-  }
-
-  .feedback-icon {
-    font-size: 16px;
-    margin-left: 6px;
-  }
-
-  /* Results screen */
-  .results-screen {
-    display: none;
-    text-align: center;
-    animation: slideUp 0.5s ease;
-  }
-
+  /* Results */
+  .results-screen { display: none; text-align: center; animation: slideUp 0.5s ease; }
   .results-screen.show { display: block; }
-
   .results-circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
+    width: 130px; height: 130px; border-radius: 50%;
     background: conic-gradient(var(--green) var(--pct), var(--surface2) 0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 24px;
-    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px; position: relative;
   }
-
-  .results-circle::before {
-    content: '';
-    position: absolute;
-    inset: 10px;
-    border-radius: 50%;
-    background: var(--surface);
-  }
-
-  .results-score {
-    position: relative;
-    z-index: 1;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-  }
-
-  .results-title {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-
-  .results-sub {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 28px;
-  }
-
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 28px;
-  }
-
-  .result-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 12px;
-  }
-
-  .result-box .num {
-    font-size: 28px;
-    font-weight: 800;
-    font-family: 'Tajawal', sans-serif;
-    margin-bottom: 4px;
-  }
-
-  .result-box .lbl {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .num-green { color: var(--green); }
-  .num-red { color: var(--red); }
-  .num-blue { color: var(--accent); }
+  .results-circle::before { content: ''; position: absolute; inset: 10px; border-radius: 50%; background: var(--surface); }
+  .results-score { position: relative; z-index: 1; font-family: 'Tajawal',sans-serif; font-size: 26px; font-weight: 800; }
+  .results-title { font-family: 'Tajawal',sans-serif; font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .results-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 24px; }
+  .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 24px; }
+  .result-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 10px; }
+  .result-box .num { font-size: 26px; font-weight: 800; font-family: 'Tajawal',sans-serif; margin-bottom: 3px; }
+  .result-box .lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+  .num-green { color: var(--green); } .num-red { color: var(--red); } .num-blue { color: var(--accent); }
 
   /* Buttons */
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 7px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 14px 28px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin: 6px;
+    color: white; border: none; border-radius: 13px;
+    padding: 13px 24px; font-family: 'Cairo',sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; margin: 5px;
   }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(59,130,246,0.35);
-  }
-
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59,130,246,0.35); }
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 28px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin: 6px;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 13px;
+    padding: 13px 24px; font-family: 'Cairo',sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; margin: 5px;
   }
+  .btn-secondary:hover { border-color: var(--accent); transform: translateY(-2px); }
 
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* Navigation */
-  .nav-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
+  .nav-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
 
   /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .trophy-anim { font-size: 56px; margin-bottom: 14px; animation: bounce 1s infinite alternate; }
+  @keyframes bounce { from { transform:translateY(0); } to { transform:translateY(-8px); } }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Trophy animation */
-  .trophy-anim {
-    font-size: 60px;
-    margin-bottom: 16px;
-    animation: bounce 1s infinite alternate;
-  }
-
-  @keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-8px); }
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  /* Responsive */
   @media (max-width: 480px) {
-    .results-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .question-card { padding: 20px 16px; }
+    .chapter-selector { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .question-card { padding: 18px 14px; }
     .q-text { font-size: 14px; }
     .tf-buttons { flex-direction: column; }
+    .section-tabs { flex-wrap: wrap; }
+    .tab-btn { font-size: 11px; }
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="mainContainer">
+
   <!-- Header -->
   <div class="header">
-    <div class="badge">📚 مراجعة اقتصاد</div>
-    <h1>السياسة المالية والنقدية</h1>
-    <p>اختبر معلوماتك وتحقق من فهمك للمفاهيم الاقتصادية</p>
+    <div class="badge">📚 مراجعة اقتصاد كلي — فرقة ثالثة</div>
+    <h1>اختبار الفصول الدراسية</h1>
+    <p>اختر الفصل الذي تريد مراجعته أو اختبر نفسك على الكل</p>
+  </div>
+
+  <!-- Chapter selector -->
+  <div class="chapter-selector" id="chapterSelector">
+    <div class="chapter-card ch1" id="cardCh1" onclick="selectChapter(1)">
+      <div class="ch-icon">📊</div>
+      <div class="ch-title" style="color:var(--green)">الفصل الأول</div>
+      <div class="ch-sub">الناتج والدخل القومي<br>27 سؤال</div>
+    </div>
+    <div class="chapter-card active" id="cardCh3" onclick="selectChapter(3)">
+      <div class="ch-icon">🏦</div>
+      <div class="ch-title">الفصل الثالث</div>
+      <div class="ch-sub">السياسة المالية والنقدية<br>53 سؤال</div>
+    </div>
+    <div class="chapter-card ch4" id="cardCh4" onclick="selectChapter(4)">
+      <div class="ch-icon">🌐</div>
+      <div class="ch-title" style="color:var(--purple)">الفصل الرابع</div>
+      <div class="ch-sub">التجارة الدولية وسعر الصرف<br>24 سؤال</div>
+    </div>
   </div>
 
   <!-- Stats bar -->
@@ -588,9 +311,9 @@
 
   <!-- Section Tabs -->
   <div class="section-tabs" id="sectionTabs">
-    <button class="tab-btn active" onclick="switchSection(0)">صح أم خطأ (28)</button>
-    <button class="tab-btn" onclick="switchSection(1)">اختيار من متعدد (25)</button>
-    <button class="tab-btn" onclick="switchSection(2)">الكل (53)</button>
+    <button class="tab-btn active" id="tabTF" onclick="switchType('tf')">✓ صح أم خطأ</button>
+    <button class="tab-btn" id="tabMC" onclick="switchType('mc')">● اختيار متعدد</button>
+    <button class="tab-btn" id="tabAll" onclick="switchType('all')">📋 الكل</button>
   </div>
 
   <!-- Progress -->
@@ -599,9 +322,7 @@
       <span id="progressText">السؤال 1 من 0</span>
       <span id="progressPct">0%</span>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width:0%"></div>
-    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
 
   <!-- Questions Container -->
@@ -622,116 +343,211 @@
       <div class="results-score" id="resultsScore">0%</div>
     </div>
     <div class="results-grid">
-      <div class="result-box">
-        <div class="num num-green" id="resCorrect">0</div>
-        <div class="lbl">إجابات صحيحة</div>
-      </div>
-      <div class="result-box">
-        <div class="num num-red" id="resWrong">0</div>
-        <div class="lbl">إجابات خاطئة</div>
-      </div>
-      <div class="result-box">
-        <div class="num num-blue" id="resTotal">0</div>
-        <div class="lbl">إجمالي الأسئلة</div>
-      </div>
+      <div class="result-box"><div class="num num-green" id="resCorrect">0</div><div class="lbl">صحيحة</div></div>
+      <div class="result-box"><div class="num num-red" id="resWrong">0</div><div class="lbl">خاطئة</div></div>
+      <div class="result-box"><div class="num num-blue" id="resTotal">0</div><div class="lbl">إجمالي</div></div>
     </div>
     <div>
       <button class="btn-primary" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
       <button class="btn-secondary" onclick="reviewAnswers()">📋 مراجعة الإجابات</button>
+      <button class="btn-secondary" onclick="goHome()">🏠 اختر فصل آخر</button>
     </div>
   </div>
+
 </div>
 
 <script>
-// ==================== QUESTIONS DATA ====================
-const tfQuestions = [
-  { id: 1, type: 'tf', text: 'السياسة المالية هي مجموعة الإجراءات التي يتخذها البنك المركزي لإدارة النشاط الاقتصادي.', answer: false, explanation: 'السياسة المالية تتخذها الحكومة وليس البنك المركزي.' },
-  { id: 2, type: 'tf', text: 'من أهداف السياسة المالية تحقيق التوازن الاجتماعي ورفع مستوى الرفاهية وتحقيق العدالة الاجتماعية.', answer: true, explanation: 'صحيح، هذا من أهم أهداف السياسة المالية.' },
-  { id: 3, type: 'tf', text: 'أدوات السياسة المالية تتمثل في الإنفاق الحكومي والضرائب.', answer: true, explanation: 'صحيح، الإنفاق الحكومي والضرائب هما الأداتان الرئيسيتان للسياسة المالية.' },
-  { id: 4, type: 'tf', text: 'تهدف السياسة النقدية إلى تحقيق التوازن في الميزان التجاري وميزان المدفوعات وتحسين قيمة العملة.', answer: true, explanation: 'صحيح، هذه من ضمن أهداف السياسة النقدية.' },
-  { id: 5, type: 'tf', text: '"سياسة السوق المفتوح" من أدوات السياسة المالية.', answer: false, explanation: 'سياسة السوق المفتوح من أدوات السياسة النقدية وليس المالية.' },
-  { id: 6, type: 'tf', text: 'في حالة الركود، تهدف السياسة النقدية إلى تقليل عرض النقود للحد من التضخم.', answer: false, explanation: 'في حالة الركود، تهدف إلى زيادة عرض النقود ليزيد الطلب الفعال ومن ثم زيادة التشغيل.' },
-  { id: 7, type: 'tf', text: 'السياسة الانكماشية هي سياسات تتبعها الحكومة والبنك المركزي لحل مشكلة الفجوة التضخمية.', answer: true, explanation: 'صحيح، السياسة الانكماشية تستخدم لمعالجة الفجوة التضخمية.' },
-  { id: 8, type: 'tf', text: 'من الإجراءات النقدية الانكماشية قيام البنك المركزي بشراء السندات لضخ السيولة في البنوك.', answer: false, explanation: 'في السياسة الانكماشية يقوم البنك ببيع السندات لامتصاص السيولة الزائدة، وليس شراؤها.' },
-  { id: 9, type: 'tf', text: 'في السياسة المالية التوسعية، يتم زيادة الإنفاق الحكومي وتقليل الضرائب للتشجيع على الاستهلاك.', answer: true, explanation: 'صحيح، هذا هو جوهر السياسة المالية التوسعية.' },
-  { id: 10, type: 'tf', text: 'ظهرت النقود أولاً ثم جاء بعدها نظام المقايضة لتسهيل التعاملات.', answer: false, explanation: 'ظهر نظام المقايضة أولاً، وأدت صعوباته إلى ظهور النقود.' },
-  { id: 11, type: 'tf', text: 'النقود المصرفية (الودائع) تعتبر أحد أنواع النقود المعترف بها.', answer: true, explanation: 'صحيح، الودائع أو النقود المصرفية معترف بها كنوع من أنواع النقود.' },
-  { id: 12, type: 'tf', text: 'يُعد البنك المركزي المستشار المالي للحكومة لأنه يحتفظ بودائعها ويسهل تسوية حساباتها.', answer: true, explanation: 'صحيح، هذه من ضمن أدوار البنك المركزي كمستشار مالي.' },
-  { id: 13, type: 'tf', text: 'البنوك التجارية هي الجهة الوحيدة التي تتفرد بسلطة إصدار النقد الورقي القانوني للدولة.', answer: false, explanation: 'البنك المركزي هو "بنك الإصدار" الذي يتفرد بهذه السلطة، وليس البنوك التجارية.' },
-  { id: 14, type: 'tf', text: 'التضخم الركودي هو مشكلة مزدوجة ومعقدة تجمع بين الارتفاع العالي في الأسعار وارتفاع نسبة البطالة في وقت واحد.', answer: true, explanation: 'صحيح، هذا هو تعريف التضخم الركودي.' },
-  { id: 15, type: 'tf', text: 'تؤدي الفجوة التضخمية إلى قلة العرض وزيادة الطلب وارتفاع سعر الفائدة.', answer: true, explanation: 'صحيح، هذه من آثار الفجوة التضخمية.' },
-  { id: 16, type: 'tf', text: 'في الفجوة الانكماشية، يكون الطلب أكبر من العرض مما يدفع لزيادة الإنتاج.', answer: false, explanation: 'في الفجوة الانكماشية يكون العرض أكبر من الطلب، مما يؤدي لزيادة المخزون وخفض الإنتاج والاستثمار.' },
-  { id: 17, type: 'tf', text: 'من أهداف السياسة المالية استغلال الموارد استغلالاً أمثلاً وتوجيه القروض لأغراض إنتاجية مناسبة.', answer: true, explanation: 'صحيح.' },
-  { id: 18, type: 'tf', text: 'تحقيق "التوازن الاجتماعي" كأحد أهداف السياسة المالية يعني التركيز فقط على الوصول للتوظف الكامل.', answer: false, explanation: 'التوازن الاجتماعي يعني رفع مستوى الرفاهية وتحقيق العدالة الاجتماعية، وليس فقط التوظف الكامل.' },
-  { id: 19, type: 'tf', text: 'في نظام المقايضة، كانت الصعوبة الأساسية التي أدت لظهور النقود هي صعوبة "توافق الرغبات بين المتعاملين".', answer: true, explanation: 'صحيح، كانت صعوبة توافق الرغبات هي المشكلة الجوهرية في نظام المقايضة.' },
-  { id: 20, type: 'tf', text: 'البنك المركزي لا يتدخل في تمويل عجز الموازنة العامة للدولة.', answer: false, explanation: 'البنك المركزي يُعد جهة إقراض للدولة للحصول على تسهيلات ائتمانية لمقابلة عجز الموازنة.' },
-  { id: 21, type: 'tf', text: 'الفجوة التضخمية تؤدي إلى تعطل المشاريع الحكومية وزيادة الضرائب.', answer: true, explanation: 'صحيح.' },
-  { id: 22, type: 'tf', text: 'الفجوة الانكماشية (الركود) تؤدي إلى زيادة الناتج والدخل القومي على المدى القصير.', answer: false, explanation: 'الفجوة الانكماشية تؤدي إلى انخفاض الناتج والدخل، وليس زيادتهما.' },
-  { id: 23, type: 'tf', text: 'النقود الإلكترونية تُعد أحد أنواع النقود المعترف بها لتسهيل المعاملات.', answer: true, explanation: 'صحيح.' },
-  { id: 24, type: 'tf', text: 'لتحقيق "التوظف الكامل" في حالة الركود، تقوم السياسة النقدية بخفض عرض النقود لزيادة الطلب الفعال.', answer: false, explanation: 'في حالة الركود، تهدف السياسة النقدية لزيادة عرض النقود ليزيد الطلب الفعال.' },
-  { id: 25, type: 'tf', text: 'يقتصر دور البنك المركزي كمستشار مالي للحكومة على إدارة السياسة النقدية فقط دون التدخل في السياسة المالية.', answer: false, explanation: 'من أدوار البنك المركزي كمستشار مالي أنه يقوم بوضع السياسة المالية والنقدية معاً.' },
-  { id: 26, type: 'tf', text: 'تعتبر "الودائع" نوعاً من أنواع النقود المعترف بها وتسمى بالنقود المصرفية.', answer: true, explanation: 'صحيح.' },
-  { id: 27, type: 'tf', text: 'تؤدي الفجوة التضخمية إلى خفض الضرائب لتخفيف العبء عن المواطنين.', answer: false, explanation: 'الفجوة التضخمية تؤدي إلى ارتفاع في الضرائب وليس خفضها.' },
-  { id: 28, type: 'tf', text: 'في الفجوة الانكماشية، يقوم المنتجون بزيادة معدل الاستثمار لتصريف المخزون المتراكم.', answer: false, explanation: 'زيادة المخزون تدفع المنتجين إلى خفض معدل الإنتاج والاستثمار، وليس زيادته.' }
+// ==================== DATA: CHAPTER 1 ====================
+const ch1_tf = [
+  { id:201, ch:1, type:'tf', text:'الناتج المحلي الإجمالي (GDP) يحسب قيمة السلع والخدمات بناءً على جنسية القائمين على الإنتاج.', answer:false, explanation:'يحسب بناءً على الإنتاج داخل الحدود الجغرافية للدولة بغض النظر عن جنسية القائمين عليه.' },
+  { id:202, ch:1, type:'tf', text:'الناتج القومي الإجمالي (GNP) يهتم بالإنتاج باستخدام عناصر إنتاج وطنية سواء داخل البلد أو خارجها.', answer:true, explanation:'صحيح.' },
+  { id:203, ch:1, type:'tf', text:'"الإنتاج القومي" يقع في فخ التكرار الحسابي لأنه لا يستبعد السلع الوسيطة.', answer:true, explanation:'صحيح، وهذا هو الفرق بين الإنتاج القومي والناتج القومي.' },
+  { id:204, ch:1, type:'tf', text:'تُحسب مدفوعات التحويلات (مثل المعاشات وإعانات البطالة) ضمن الناتج القومي لأنها تعكس إنتاجاً جارياً.', answer:false, explanation:'تستبعد تماماً لأنها لا تعكس أي إنتاج جاري، بل هي مجرد تحويل للإيرادات الحكومية.' },
+  { id:205, ch:1, type:'tf', text:'الاستهلاك الشخصي للمزارع والصياد من إنتاجهما يُستثنى من الحساب ولا يدخل في الناتج القومي.', answer:false, explanation:'يُحسب ويدخل في الناتج القومي على أساس أسعار مثيلاتها في السوق رغم أنها عمليات غير سوقية.' },
+  { id:206, ch:1, type:'tf', text:'وفقاً لطريقة الإنفاق، يتم إضافة المسحوب من المخزون السلعي إلى الناتج، ويُطرح المضاف إليه.', answer:false, explanation:'الإضافة للمخزون تُضاف للناتج، والسحب منه يُطرح.' },
+  { id:207, ch:1, type:'tf', text:'أرباح الشركات المساهمة تنقسم إلى ضرائب دخل، وأرباح أسهم، وأرباح محتجزة.', answer:true, explanation:'صحيح.' },
+  { id:208, ch:1, type:'tf', text:'القيمة التقديرية للمساكن التي يقطنها أصحابها تُحسب ضمن بند "الريع" في طريقة الدخل.', answer:true, explanation:'صحيح.' },
+  { id:209, ch:1, type:'tf', text:'الناتج القومي بسعر التكلفة يحتوي على الضرائب غير المباشرة مطروحاً منها الإعانات.', answer:false, explanation:'الناتج القومي بسعر السوق هو الذي يحتوي على الضرائب غير المباشرة مطروحاً منها الإعانات، بينما سعر التكلفة يعبر عن ما دُفع فعلياً لعناصر الإنتاج.' },
+  { id:210, ch:1, type:'tf', text:'الدخل المتصرف فيه هو الدخل الشخصي بعد دفع الضرائب المباشرة على الدخل.', answer:true, explanation:'صحيح.' },
+  { id:211, ch:1, type:'tf', text:'الظروف الطبيعية (كالزلازل والفيضانات) لا تؤثر على حجم الناتج القومي الإجمالي لأنها خارجة عن إرادة الإنسان.', answer:false, explanation:'الظروف الطبيعية تُعد من أهم العوامل المحددة لحجم الناتج القومي لأنها تؤثر على الإنتاج.' },
+  { id:212, ch:1, type:'tf', text:'تشمل "الأجور" في حساب الدخل القومي الحوافز والمكافآت والبدلات، بالإضافة إلى معاشات الضمان الاجتماعي.', answer:false, explanation:'تُحسب الحوافز والمكافآت والبدلات، ولكن يُستثنى منها تعويضات العاملين ومعاشات الضمان الاجتماعي.' },
+  { id:213, ch:1, type:'tf', text:'الأرباح المحتجزة هي جزء من أرباح الشركات المساهمة يتم توزيعه فوراً على المساهمين.', answer:false, explanation:'الأرباح المحتجزة لا توزع، بل تُحتجز لمواجهة التزامات أو للتوسع في الشركة.' },
+  { id:214, ch:1, type:'tf', text:'العوائد التي يحصل عليها أصحاب براءات الاختراع أو حقوق التأليف تُصنف اقتصادياً ضمن بند "الريع".', answer:true, explanation:'صحيح.' },
+  { id:215, ch:1, type:'tf', text:'يتضمن "الإنفاق الحكومي" جميع القيم النقدية للسلع والخدمات بما في ذلك مدفوعات التحويلات.', answer:false, explanation:'يتم حساب السلع والخدمات التي تشتريها الحكومة مع استبعاد مدفوعات التحويلات.' },
+  { id:216, ch:1, type:'tf', text:'الناتج القومي الإجمالي يساوي الناتج المحلي الإجمالي مطروحاً منه صافي عوائد عناصر الإنتاج من الخارج.', answer:false, explanation:'الناتج القومي الإجمالي = الناتج المحلي الإجمالي + صافي عوائد عناصر الإنتاج من الخارج.' }
 ];
 
-const mcQuestions = [
-  { id: 29, type: 'mc', text: 'مجموعة الأساليب والإجراءات التي يستخدمها البنك المركزي للتأثير على عرض النقود بما يتلاءم مع النشاط الاقتصادي هي:', options: ['السياسة المالية','السياسة النقدية','الفجوة التضخمية','نظام المقايضة'], answer: 1, explanation: 'السياسة النقدية هي التي يستخدمها البنك المركزي للتأثير على عرض النقود.' },
-  { id: 30, type: 'mc', text: 'أي من الآتي يُعد من أدوات السياسة النقدية التي يستخدمها البنك المركزي؟', options: ['الإنفاق الحكومي','الضرائب','سعر الخصم والاحتياطي القانوني','الفجوة الانكماشية'], answer: 2, explanation: 'سعر الخصم ونسبة الاحتياطي القانوني من الأدوات الرئيسية للسياسة النقدية.' },
-  { id: 31, type: 'mc', text: 'عندما يزيد الطلب عن العرض وتحدث "فجوة تضخمية"، تلجأ الدولة إلى تطبيق:', options: ['السياسة الانكماشية','السياسة التوسعية','التضخم الركودي','تخفيض الضرائب'], answer: 0, explanation: 'تلجأ الدولة للسياسة الانكماشية لتقليل الطلب الزائد.' },
-  { id: 32, type: 'mc', text: 'كل ما يلي يُعد من الإجراءات "التوسعية" لحل الفجوة الانكماشية مَا عَدَا:', options: ['شراء السندات لضخ السيولة','خفض سعر الخصم وتقليل نسبة الاحتياطي القانوني','تقليل الضرائب وزيادة الإنفاق الحكومي','رفع سعر الخصم لتقييد قدرة البنوك على الإقراض'], answer: 3, explanation: 'رفع سعر الخصم إجراء انكماشي وليس توسعياً.' },
-  { id: 33, type: 'mc', text: 'أي شيء يمتلك قبولاً عاماً كوسيلة دفع مقابل السلع والخدمات يُعرف بـ:', options: ['السندات','النقود','الودائع فقط','الاحتياطي القانوني'], answer: 1, explanation: 'النقود هي كل ما يُقبل عموماً وسيطاً للتبادل.' },
-  { id: 34, type: 'mc', text: 'الجهة التي تعتبر "بنك الإصدار" وتتفرد بسلطة إصدار النقد الورقي القانوني للدولة هي:', options: ['الحكومة','البنوك التجارية','البنك المركزي','البورصة'], answer: 2, explanation: 'البنك المركزي هو بنك الإصدار.' },
-  { id: 35, type: 'mc', text: 'من أسباب اعتبار البنك المركزي المستشار المالي للحكومة:', options: ['يحتفظ بودائع الدولة','يسهل تسوية حساباتها كأعمال مصرفية','يُعد جهة إقراض للدولة لمقابلة عجز الموازنة العامة','جميع ما سبق'], answer: 3, explanation: 'جميع الأسباب المذكورة تجعله مستشاراً مالياً للحكومة.' },
-  { id: 36, type: 'mc', text: 'المشكلة الاقتصادية المعقدة التي تتمثل في مزيج من (الارتفاع العالي في الأسعار + ارتفاع نسبة البطالة) هي:', options: ['الفجوة التضخمية','الفجوة الانكماشية','التضخم الركودي','نظام المقايضة'], answer: 2, explanation: 'التضخم الركودي يجمع بين ارتفاع الأسعار والبطالة في آنٍ واحد.' },
-  { id: 37, type: 'mc', text: 'في حالة الفجوة التضخمية، تظهر بعض الآثار في المجتمع منها:', options: ['انخفاض في الأسعار','الارتفاع الجنوني في الأسعار وتعطل مشاريع حكومية','زيادة العرض وقلة الطلب','نقص سعر الفائدة'], answer: 1, explanation: 'الفجوة التضخمية تؤدي لارتفاع جنوني في الأسعار وتعطل المشاريع.' },
-  { id: 38, type: 'mc', text: 'من الآثار المباشرة للفجوة الانكماشية (عندما يكون العرض أكبر من الطلب):', options: ['زيادة الإنتاج والاستثمار','زيادة المخزون ودفع المنتجين للاستغناء عن بعض الوحدات الإنتاجية','انخفاض معدل البطالة','زيادة الناتج والدخل'], answer: 1, explanation: 'أول أثر هو تراكم المخزون مما يدفع للاستغناء عن وحدات الإنتاج.' },
-  { id: 39, type: 'mc', text: 'أي من الآتي يُعد من أهداف "التوازن الاجتماعي" ضمن السياسة المالية؟', options: ['تحقيق التوظف الكامل فقط','رفع مستوى الرفاهية وتحقيق العدالة الاجتماعية','زيادة عرض النقود في السوق','خفض الواردات وزيادة الصادرات'], answer: 1, explanation: 'التوازن الاجتماعي = رفع الرفاهية + العدالة الاجتماعية.' },
-  { id: 40, type: 'mc', text: 'لمواجهة "عجز الموازنة العامة"، تلجأ الدولة إلى البنك المركزي باعتباره:', options: ['بنك الإصدار فقط','جهة إقراض للحصول على تسهيلات ائتمانية','أداة لجمع الضرائب من المواطنين','مسئولاً عن السوق المفتوح فقط'], answer: 1, explanation: 'البنك المركزي جهة إقراض للدولة لتمويل عجز الموازنة.' },
-  { id: 41, type: 'mc', text: 'الصعوبة الجوهرية التي أدت إلى فشل نظام المقايضة وظهور النقود كبديل هي:', options: ['سهولة التخزين وتلف السلع','صعوبة توافق الرغبات بين المتعاملين','توفر السلع بكثرة في الأسواق','عدم وجود بنوك تجارية'], answer: 1, explanation: 'صعوبة توافق الرغبات هي السبب الجوهري لفشل نظام المقايضة.' },
-  { id: 42, type: 'mc', text: 'عند حدوث "فجوة انكماشية" وانخفاض الطلب عن العرض، فإن أول نتيجة مباشرة يواجهها المنتجون هي:', options: ['زيادة الأرباح والإنتاج','تعطل المشاريع الحكومية','زيادة في المخزون السلعي','الارتفاع الجنوني في الأسعار'], answer: 2, explanation: 'تراكم المخزون هو أول النتائج المباشرة للفجوة الانكماشية.' },
-  { id: 43, type: 'mc', text: 'من النتائج المترتبة على حدوث "الفجوة التضخمية" في المجتمع:', options: ['انخفاض معدل الإنتاج والاستثمار','انخفاض سعر الفائدة','الاستغناء عن بعض الوحدات الإنتاجية','تعطل المشاريع الحكومية وارتفاع سعر الفائدة'], answer: 3, explanation: 'تعطل المشاريع وارتفاع سعر الفائدة من نتائج الفجوة التضخمية.' },
-  { id: 44, type: 'mc', text: 'من الإجراءات النقدية الانكماشية التي يتخذها البنك المركزي لجعل القروض "باهظة الثمن":', options: ['خفض سعر الخصم','شراء السندات','رفع نسبة الاحتياطي القانوني','زيادة الإنفاق الحكومي'], answer: 2, explanation: 'رفع نسبة الاحتياطي القانوني يقيد قدرة البنوك على الإقراض.' },
-  { id: 45, type: 'mc', text: 'الوظيفة "الأساسية" التي يتفرد بها البنك المركزي وتجعله يسمى بـ "بنك الإصدار" هي:', options: ['إصدار النقد الورقي القانوني للدولة','الاحتفاظ بودائع الحكومة','تسوية الحسابات والأعمال المصرفية','تحديد الضرائب'], answer: 0, explanation: 'إصدار النقد الورقي القانوني هو الوظيفة الأساسية التي تُميزه.' },
-  { id: 46, type: 'mc', text: 'لحل مشكلة الركود وتوقف عجلة الاقتصاد، يتم اتخاذ إجراءات لرفع قدرة البنوك على الإقراض تتمثل في:', options: ['بيع السندات ورفع الضرائب','نقص سعر الخصم وتقليل نسبة الاحتياطي القانوني','زيادة نسبة الاحتياطي القانوني فقط','تقليل الإنفاق الحكومي'], answer: 1, explanation: 'خفض سعر الخصم والاحتياطي القانوني يرفع قدرة البنوك على الإقراض.' },
-  { id: 47, type: 'mc', text: 'في حالة "التضخم الركودي"، يعاني الاقتصاد من مشكلة مركبة تتضمن:', options: ['انخفاض الأسعار وانخفاض البطالة','ارتفاع الأسعار وانخفاض البطالة','الارتفاع العالي جداً في الأسعار مع ارتفاع نسبة البطالة','زيادة العرض وقلة الطلب'], answer: 2, explanation: 'التضخم الركودي = ارتفاع أسعار + ارتفاع بطالة.' },
-  { id: 48, type: 'mc', text: 'عندما يختل التوازن ويصبح (العرض < الطلب)، فإننا نكون أمام:', options: ['فجوة انكماشية','فجوة تضخمية','تضخم ركودي','توازن اقتصادي'], answer: 1, explanation: 'الطلب أكبر من العرض = فجوة تضخمية.' },
-  { id: 49, type: 'mc', text: 'أي من الآتي يُعد من الإجراءات المالية التوسعية لمواجهة الركود؟', options: ['رفع الضرائب','تقليل الإنفاق الحكومي','تقليل الضرائب وزيادة الإنفاق الحكومي','بيع السندات الحكومية'], answer: 2, explanation: 'التوسع المالي يعني زيادة الإنفاق وخفض الضرائب.' },
-  { id: 50, type: 'mc', text: 'من أهداف السياسة النقدية الرئيسية:', options: ['تحديد معدلات الضرائب','التأثير على عرض النقود لتحقيق الاستقرار الاقتصادي','إعداد الموازنة العامة للدولة','تنظيم التجارة الخارجية'], answer: 1, explanation: 'التأثير على عرض النقود هو الهدف الجوهري للسياسة النقدية.' },
-  { id: 51, type: 'mc', text: 'أي مما يلي يمثل نوعاً من أنواع النقود المعترف بها؟', options: ['السندات الحكومية فقط','الأسهم التجارية','النقود الورقية والمعدنية والإلكترونية والمصرفية','عقود الإيجار'], answer: 2, explanation: 'تشمل أنواع النقود: الورقية، المعدنية، الإلكترونية، والمصرفية (الودائع).' },
-  { id: 52, type: 'mc', text: 'ما الفرق الجوهري بين الفجوة التضخمية والفجوة الانكماشية؟', options: ['لا فرق بينهما','في التضخمية الطلب > العرض، وفي الانكماشية العرض > الطلب','في التضخمية العرض > الطلب، وفي الانكماشية الطلب > العرض','كلاهما ينتج عن نفس السبب'], answer: 1, explanation: 'التضخمية: طلب > عرض. الانكماشية: عرض > طلب.' },
-  { id: 53, type: 'mc', text: 'ما الحل الأنسب لمعالجة التضخم الركودي مقارنة بالفجوات الأخرى؟', options: ['تطبيق السياسة التوسعية فقط','تطبيق السياسة الانكماشية فقط','يصعب معالجته لأن الحلول المعتادة تتعارض مع بعضها','لا يحتاج لتدخل حكومي'], answer: 2, explanation: 'التضخم الركودي صعب المعالجة لأن علاج التضخم يزيد البطالة والعكس صحيح.' }
+const ch1_mc = [
+  { id:217, ch:1, type:'mc', text:'القيمة الصافية والنهائية للسلع والخدمات الموجهة للاستخدام المباشر والتي تُحسب باستبعاد السلع الوسيطة هي:', options:['الإنتاج القومي','الناتج القومي','الدخل القومي','الناتج المحلي'], answer:1, explanation:'الناتج القومي هو القيمة الصافية النهائية باستبعاد السلع الوسيطة.' },
+  { id:218, ch:1, type:'mc', text:'للوصول إلى "الناتج القومي الإجمالي" من خلال "الناتج المحلي الإجمالي"، نقوم بجمع الناتج المحلي مع:', options:['الإعانات الحكومية','الضرائب غير المباشرة','صافي عوائد عناصر الإنتاج من الخارج','إهلاك رأس المال'], answer:2, explanation:'GNP = GDP + صافي عوائد عناصر الإنتاج من الخارج.' },
+  { id:219, ch:1, type:'mc', text:'المعادلة الصحيحة لحساب "القيمة المضافة" هي:', options:['قيمة الإنتاج للمشروع + مستلزمات الإنتاج','قيمة الإنتاج للمشروع - مستلزمات الإنتاج','الأرباح + الأجور','الاستثمار الإجمالي - إهلاك رأس المال'], answer:1, explanation:'القيمة المضافة = قيمة الإنتاج - مستلزمات الإنتاج.' },
+  { id:220, ch:1, type:'mc', text:'في طريقة الإنفاق، يمثل الإنفاق الاستثماري مجموع القيم النقدية للسلع الرأسمالية ويتضمن:', options:['الشراء النهائي للمعدات والآلات والمباني','التغير في المخزون السلعي','(أ) و(ب) معاً','مدفوعات التحويلات'], answer:2, explanation:'يشمل شراء المعدات والآلات والمباني + التغير في المخزون السلعي.' },
+  { id:221, ch:1, type:'mc', text:'المعادلة العامة لحساب الناتج القومي الإجمالي بطريقة الإنفاق هي:', options:['GNP = C + I + G + (X - M)','GNP = C + I - G','GNP = C + I + (X + M)','GNP = C - I + G'], answer:0, explanation:'GNP = C + I + G + (X - M)' },
+  { id:222, ch:1, type:'mc', text:'الدخل من نشاط المؤسسات الفردية والبسيطة يُصنف ضمن بند "الأرباح" تحت مسمى:', options:['الأرباح المحتجزة','دخل الملاك','أرباح الأسهم','الريع'], answer:1, explanation:'دخل الملاك هو الدخل من نشاط المؤسسات الفردية.' },
+  { id:223, ch:1, type:'mc', text:'يمكن حساب "الدخل الشخصي" عن طريق:', options:['الدخل القومي - مدفوعات التحويلات','الدخل المتصرف فيه + الضرائب المباشرة','الدخل القومي + مدفوعات التحويلات - (الضرائب على الأرباح + الأرباح المحتجزة + المعاشات)','الناتج القومي بسعر السوق - الإعانات'], answer:2, explanation:'الدخل الشخصي = الدخل القومي + مدفوعات التحويلات - (ضرائب أرباح + أرباح محتجزة + معاشات).' },
+  { id:224, ch:1, type:'mc', text:'من العوامل المحددة لحجم الناتج القومي الإجمالي:', options:['الاستقرار السياسي للدولة','كمية ونوعية الموارد الاقتصادية','الظروف الطبيعية','جميع ما سبق'], answer:3, explanation:'جميع ما سبق.' },
+  { id:225, ch:1, type:'mc', text:'الدخل الذي يمكن للفرد التصرف فيه بإنفاقه على الاستهلاك والادخار يُعرف بـ:', options:['الدخل القومي','الدخل الشخصي','الدخل المتصرف فيه','الناتج القومي بسعر التكلفة'], answer:2, explanation:'الدخل المتصرف فيه = الدخل الشخصي - الضرائب المباشرة.' },
+  { id:226, ch:1, type:'mc', text:'أي مما يلي يُستبعد تماماً عند حساب "الأجور" بطريقة الدخل؟', options:['مقابل الخدمات البدنية والذهنية','الحوافز والمكافآت','البدلات','تعويضات العاملين ومعاشات الضمان الاجتماعي'], answer:3, explanation:'تعويضات العاملين ومعاشات الضمان الاجتماعي تُستبعد.' },
+  { id:227, ch:1, type:'mc', text:'للوصول إلى "صافي الناتج القومي بسعر السوق"، يجب طرح ماذا من "الناتج القومي الإجمالي"؟', options:['الضرائب غير المباشرة','إهلاك رأس المال','الإعانات الحكومية','الأرباح المحتجزة'], answer:1, explanation:'صافي الناتج القومي = الناتج القومي الإجمالي - إهلاك رأس المال.' },
+  { id:228, ch:1, type:'mc', text:'شراء سلع معمرة كالسيارات وسلع غير معمرة كالمأكل بواسطة الأفراد يُعد جزءاً من:', options:['الإنفاق الاستثماري','الإنفاق الحكومي','الإنفاق الاستهلاكي','صافي التجارة الخارجية'], answer:2, explanation:'الإنفاق الاستهلاكي C.' },
+  { id:229, ch:1, type:'mc', text:'أي من المكونات التالية يمثل إنفاق "قطاع العالم الخارجي"؟', options:['الضرائب والرسوم الجمركية','الاستثمار الصافي','الصادرات ناقص الواردات (X - M)','الإعانات الحكومية'], answer:2, explanation:'(X - M) = صافي الصادرات.' },
+  { id:230, ch:1, type:'mc', text:'الجزء من أرباح الشركات المساهمة الذي يُستخدم لمواجهة الالتزامات المستقبلية أو التوسع في النشاط هو:', options:['أرباح الأسهم','ضرائب دخل الشركات','الأرباح المحتجزة','دخل الملاك'], answer:2, explanation:'الأرباح المحتجزة.' }
 ];
 
-const allQuestions = [...tfQuestions, ...mcQuestions];
+// ==================== DATA: CHAPTER 3 ====================
+const ch3_tf = [
+  { id:1, ch:3, type:'tf', text:'السياسة المالية هي مجموعة الإجراءات التي يتخذها البنك المركزي لإدارة النشاط الاقتصادي.', answer:false, explanation:'السياسة المالية تتخذها الحكومة وليس البنك المركزي.' },
+  { id:2, ch:3, type:'tf', text:'من أهداف السياسة المالية تحقيق التوازن الاجتماعي ورفع مستوى الرفاهية وتحقيق العدالة الاجتماعية.', answer:true, explanation:'صحيح، هذا من أهم أهداف السياسة المالية.' },
+  { id:3, ch:3, type:'tf', text:'أدوات السياسة المالية تتمثل في الإنفاق الحكومي والضرائب.', answer:true, explanation:'صحيح.' },
+  { id:4, ch:3, type:'tf', text:'تهدف السياسة النقدية إلى تحقيق التوازن في الميزان التجاري وميزان المدفوعات وتحسين قيمة العملة.', answer:true, explanation:'صحيح.' },
+  { id:5, ch:3, type:'tf', text:'"سياسة السوق المفتوح" من أدوات السياسة المالية.', answer:false, explanation:'سياسة السوق المفتوح من أدوات السياسة النقدية وليس المالية.' },
+  { id:6, ch:3, type:'tf', text:'في حالة الركود، تهدف السياسة النقدية إلى تقليل عرض النقود للحد من التضخم.', answer:false, explanation:'في حالة الركود تهدف لزيادة عرض النقود ليزيد الطلب الفعال ومن ثم زيادة التشغيل.' },
+  { id:7, ch:3, type:'tf', text:'السياسة الانكماشية هي سياسات تتبعها الحكومة والبنك المركزي لحل مشكلة الفجوة التضخمية.', answer:true, explanation:'صحيح.' },
+  { id:8, ch:3, type:'tf', text:'من الإجراءات النقدية الانكماشية قيام البنك المركزي بشراء السندات لضخ السيولة في البنوك.', answer:false, explanation:'في السياسة الانكماشية يقوم البنك ببيع السندات لامتصاص السيولة الزائدة.' },
+  { id:9, ch:3, type:'tf', text:'في السياسة المالية التوسعية يتم زيادة الإنفاق الحكومي وتقليل الضرائب للتشجيع على الاستهلاك.', answer:true, explanation:'صحيح.' },
+  { id:10, ch:3, type:'tf', text:'ظهرت النقود أولاً ثم جاء بعدها نظام المقايضة لتسهيل التعاملات.', answer:false, explanation:'ظهر نظام المقايضة أولاً، وأدت صعوباته إلى ظهور النقود.' },
+  { id:11, ch:3, type:'tf', text:'النقود المصرفية (الودائع) تعتبر أحد أنواع النقود المعترف بها.', answer:true, explanation:'صحيح.' },
+  { id:12, ch:3, type:'tf', text:'يُعد البنك المركزي المستشار المالي للحكومة لأنه يحتفظ بودائعها ويسهل تسوية حساباتها.', answer:true, explanation:'صحيح.' },
+  { id:13, ch:3, type:'tf', text:'البنوك التجارية هي الجهة الوحيدة التي تتفرد بسلطة إصدار النقد الورقي القانوني للدولة.', answer:false, explanation:'البنك المركزي هو "بنك الإصدار" الذي يتفرد بهذه السلطة.' },
+  { id:14, ch:3, type:'tf', text:'التضخم الركودي مشكلة مزدوجة تجمع بين الارتفاع العالي في الأسعار وارتفاع نسبة البطالة في وقت واحد.', answer:true, explanation:'صحيح.' },
+  { id:15, ch:3, type:'tf', text:'تؤدي الفجوة التضخمية إلى قلة العرض وزيادة الطلب وارتفاع سعر الفائدة.', answer:true, explanation:'صحيح.' },
+  { id:16, ch:3, type:'tf', text:'في الفجوة الانكماشية يكون الطلب أكبر من العرض مما يدفع لزيادة الإنتاج.', answer:false, explanation:'في الفجوة الانكماشية يكون العرض أكبر من الطلب، مما يؤدي لزيادة المخزون وخفض الإنتاج والاستثمار.' },
+  { id:17, ch:3, type:'tf', text:'من أهداف السياسة المالية استغلال الموارد استغلالاً أمثلاً وتوجيه القروض لأغراض إنتاجية مناسبة.', answer:true, explanation:'صحيح.' },
+  { id:18, ch:3, type:'tf', text:'تحقيق "التوازن الاجتماعي" كأحد أهداف السياسة المالية يعني التركيز فقط على الوصول للتوظف الكامل.', answer:false, explanation:'التوازن الاجتماعي يعني رفع مستوى الرفاهية وتحقيق العدالة الاجتماعية.' },
+  { id:19, ch:3, type:'tf', text:'في نظام المقايضة كانت الصعوبة الأساسية هي صعوبة "توافق الرغبات بين المتعاملين".', answer:true, explanation:'صحيح.' },
+  { id:20, ch:3, type:'tf', text:'البنك المركزي لا يتدخل في تمويل عجز الموازنة العامة للدولة.', answer:false, explanation:'البنك المركزي يُعد جهة إقراض للدولة لمقابلة عجز الموازنة.' },
+  { id:21, ch:3, type:'tf', text:'الفجوة التضخمية تؤدي إلى تعطل المشاريع الحكومية وزيادة الضرائب.', answer:true, explanation:'صحيح.' },
+  { id:22, ch:3, type:'tf', text:'الفجوة الانكماشية (الركود) تؤدي إلى زيادة الناتج والدخل القومي على المدى القصير.', answer:false, explanation:'تؤدي إلى انخفاض الناتج والدخل.' },
+  { id:23, ch:3, type:'tf', text:'النقود الإلكترونية تُعد أحد أنواع النقود المعترف بها.', answer:true, explanation:'صحيح.' },
+  { id:24, ch:3, type:'tf', text:'لتحقيق "التوظف الكامل" في حالة الركود، تقوم السياسة النقدية بخفض عرض النقود لزيادة الطلب الفعال.', answer:false, explanation:'في حالة الركود تهدف لزيادة عرض النقود ليزيد الطلب الفعال.' },
+  { id:25, ch:3, type:'tf', text:'يقتصر دور البنك المركزي كمستشار مالي على إدارة السياسة النقدية فقط دون التدخل في السياسة المالية.', answer:false, explanation:'يقوم بوضع السياسة المالية والنقدية معاً.' },
+  { id:26, ch:3, type:'tf', text:'تعتبر "الودائع" نوعاً من أنواع النقود المعترف بها وتسمى بالنقود المصرفية.', answer:true, explanation:'صحيح.' },
+  { id:27, ch:3, type:'tf', text:'تؤدي الفجوة التضخمية إلى خفض الضرائب لتخفيف العبء عن المواطنين.', answer:false, explanation:'تؤدي إلى ارتفاع في الضرائب وليس خفضها.' },
+  { id:28, ch:3, type:'tf', text:'في الفجوة الانكماشية يقوم المنتجون بزيادة معدل الاستثمار لتصريف المخزون المتراكم.', answer:false, explanation:'زيادة المخزون تدفع المنتجين إلى خفض معدل الإنتاج والاستثمار.' }
+];
+
+const ch3_mc = [
+  { id:29, ch:3, type:'mc', text:'مجموعة الأساليب والإجراءات التي يستخدمها البنك المركزي للتأثير على عرض النقود بما يتلاءم مع النشاط الاقتصادي هي:', options:['السياسة المالية','السياسة النقدية','الفجوة التضخمية','نظام المقايضة'], answer:1, explanation:'السياسة النقدية هي التي يستخدمها البنك المركزي.' },
+  { id:30, ch:3, type:'mc', text:'أي من الآتي يُعد من أدوات السياسة النقدية؟', options:['الإنفاق الحكومي','الضرائب','سعر الخصم والاحتياطي القانوني','الفجوة الانكماشية'], answer:2, explanation:'سعر الخصم والاحتياطي القانوني من أدوات السياسة النقدية.' },
+  { id:31, ch:3, type:'mc', text:'عندما يزيد الطلب عن العرض وتحدث "فجوة تضخمية"، تلجأ الدولة إلى:', options:['السياسة الانكماشية','السياسة التوسعية','التضخم الركودي','تخفيض الضرائب'], answer:0, explanation:'السياسة الانكماشية لتقليل الطلب الزائد.' },
+  { id:32, ch:3, type:'mc', text:'كل ما يلي يُعد من الإجراءات التوسعية لحل الفجوة الانكماشية مَا عَدَا:', options:['شراء السندات لضخ السيولة','خفض سعر الخصم وتقليل نسبة الاحتياطي القانوني','تقليل الضرائب وزيادة الإنفاق الحكومي','رفع سعر الخصم لتقييد قدرة البنوك على الإقراض'], answer:3, explanation:'رفع سعر الخصم إجراء انكماشي وليس توسعياً.' },
+  { id:33, ch:3, type:'mc', text:'أي شيء يمتلك قبولاً عاماً كوسيلة دفع مقابل السلع والخدمات يُعرف بـ:', options:['السندات','النقود','الودائع فقط','الاحتياطي القانوني'], answer:1, explanation:'النقود.' },
+  { id:34, ch:3, type:'mc', text:'الجهة التي تعتبر "بنك الإصدار" وتتفرد بسلطة إصدار النقد الورقي القانوني للدولة هي:', options:['الحكومة','البنوك التجارية','البنك المركزي','البورصة'], answer:2, explanation:'البنك المركزي.' },
+  { id:35, ch:3, type:'mc', text:'من أسباب اعتبار البنك المركزي المستشار المالي للحكومة:', options:['يحتفظ بودائع الدولة','يسهل تسوية حساباتها','يُعد جهة إقراض للدولة لمقابلة عجز الموازنة','جميع ما سبق'], answer:3, explanation:'جميع الأسباب.' },
+  { id:36, ch:3, type:'mc', text:'المشكلة التي تتمثل في (ارتفاع الأسعار + ارتفاع نسبة البطالة) معاً هي:', options:['الفجوة التضخمية','الفجوة الانكماشية','التضخم الركودي','نظام المقايضة'], answer:2, explanation:'التضخم الركودي.' },
+  { id:37, ch:3, type:'mc', text:'في حالة الفجوة التضخمية، تظهر بعض الآثار منها:', options:['انخفاض في الأسعار','الارتفاع الجنوني في الأسعار وتعطل مشاريع حكومية','زيادة العرض وقلة الطلب','نقص سعر الفائدة'], answer:1, explanation:'الارتفاع الجنوني في الأسعار وتعطل المشاريع.' },
+  { id:38, ch:3, type:'mc', text:'من الآثار المباشرة للفجوة الانكماشية (العرض أكبر من الطلب):', options:['زيادة الإنتاج والاستثمار','زيادة المخزون ودفع المنتجين للاستغناء عن بعض الوحدات الإنتاجية','انخفاض معدل البطالة','زيادة الناتج والدخل'], answer:1, explanation:'تراكم المخزون.' },
+  { id:39, ch:3, type:'mc', text:'أي من الآتي يُعد من أهداف "التوازن الاجتماعي" ضمن السياسة المالية؟', options:['تحقيق التوظف الكامل فقط','رفع مستوى الرفاهية وتحقيق العدالة الاجتماعية','زيادة عرض النقود','خفض الواردات وزيادة الصادرات'], answer:1, explanation:'رفع الرفاهية + العدالة الاجتماعية.' },
+  { id:40, ch:3, type:'mc', text:'لمواجهة "عجز الموازنة العامة" تلجأ الدولة إلى البنك المركزي باعتباره:', options:['بنك الإصدار فقط','جهة إقراض للحصول على تسهيلات ائتمانية','أداة لجمع الضرائب','مسئولاً عن السوق المفتوح فقط'], answer:1, explanation:'جهة إقراض.' },
+  { id:41, ch:3, type:'mc', text:'الصعوبة الجوهرية التي أدت إلى فشل نظام المقايضة هي:', options:['سهولة التخزين وتلف السلع','صعوبة توافق الرغبات بين المتعاملين','توفر السلع بكثرة','عدم وجود بنوك تجارية'], answer:1, explanation:'صعوبة توافق الرغبات.' },
+  { id:42, ch:3, type:'mc', text:'عند حدوث "فجوة انكماشية"، فإن أول نتيجة مباشرة يواجهها المنتجون هي:', options:['زيادة الأرباح والإنتاج','تعطل المشاريع الحكومية','زيادة في المخزون السلعي','الارتفاع الجنوني في الأسعار'], answer:2, explanation:'تراكم المخزون.' },
+  { id:43, ch:3, type:'mc', text:'من النتائج المترتبة على حدوث "الفجوة التضخمية":', options:['انخفاض معدل الإنتاج والاستثمار','انخفاض سعر الفائدة','الاستغناء عن بعض الوحدات الإنتاجية','تعطل المشاريع الحكومية وارتفاع سعر الفائدة'], answer:3, explanation:'تعطل المشاريع وارتفاع سعر الفائدة.' },
+  { id:44, ch:3, type:'mc', text:'من الإجراءات النقدية الانكماشية لجعل القروض "باهظة الثمن":', options:['خفض سعر الخصم','شراء السندات','رفع نسبة الاحتياطي القانوني','زيادة الإنفاق الحكومي'], answer:2, explanation:'رفع نسبة الاحتياطي القانوني.' },
+  { id:45, ch:3, type:'mc', text:'الوظيفة التي تجعل البنك المركزي يسمى "بنك الإصدار":', options:['إصدار النقد الورقي القانوني للدولة','الاحتفاظ بودائع الحكومة','تسوية الحسابات','تحديد الضرائب'], answer:0, explanation:'إصدار النقد الورقي القانوني.' },
+  { id:46, ch:3, type:'mc', text:'لحل مشكلة الركود، يتم رفع قدرة البنوك على الإقراض بـ:', options:['بيع السندات ورفع الضرائب','نقص سعر الخصم وتقليل نسبة الاحتياطي القانوني','زيادة نسبة الاحتياطي القانوني فقط','تقليل الإنفاق الحكومي'], answer:1, explanation:'خفض سعر الخصم والاحتياطي القانوني.' },
+  { id:47, ch:3, type:'mc', text:'في حالة "التضخم الركودي" يعاني الاقتصاد من:', options:['انخفاض الأسعار وانخفاض البطالة','ارتفاع الأسعار وانخفاض البطالة','الارتفاع العالي جداً في الأسعار مع ارتفاع نسبة البطالة','زيادة العرض وقلة الطلب'], answer:2, explanation:'ارتفاع أسعار + ارتفاع بطالة.' },
+  { id:48, ch:3, type:'mc', text:'عندما يصبح (العرض < الطلب) نكون أمام:', options:['فجوة انكماشية','فجوة تضخمية','تضخم ركودي','توازن اقتصادي'], answer:1, explanation:'فجوة تضخمية.' },
+  { id:49, ch:3, type:'mc', text:'أي من الآتي يُعد من الإجراءات المالية التوسعية لمواجهة الركود؟', options:['رفع الضرائب','تقليل الإنفاق الحكومي','تقليل الضرائب وزيادة الإنفاق الحكومي','بيع السندات الحكومية'], answer:2, explanation:'زيادة الإنفاق وخفض الضرائب.' },
+  { id:50, ch:3, type:'mc', text:'من أهداف السياسة النقدية الرئيسية:', options:['تحديد معدلات الضرائب','التأثير على عرض النقود لتحقيق الاستقرار الاقتصادي','إعداد الموازنة العامة','تنظيم التجارة الخارجية'], answer:1, explanation:'التأثير على عرض النقود.' },
+  { id:51, ch:3, type:'mc', text:'أي مما يلي يمثل نوعاً من أنواع النقود المعترف بها؟', options:['السندات الحكومية فقط','الأسهم التجارية','النقود الورقية والمعدنية والإلكترونية والمصرفية','عقود الإيجار'], answer:2, explanation:'تشمل: الورقية، المعدنية، الإلكترونية، والمصرفية.' },
+  { id:52, ch:3, type:'mc', text:'ما الفرق الجوهري بين الفجوة التضخمية والانكماشية؟', options:['لا فرق','في التضخمية الطلب > العرض، وفي الانكماشية العرض > الطلب','في التضخمية العرض > الطلب، وفي الانكماشية الطلب > العرض','كلاهما نفس السبب'], answer:1, explanation:'التضخمية: طلب > عرض. الانكماشية: عرض > طلب.' },
+  { id:53, ch:3, type:'mc', text:'ما الحل الأنسب لمعالجة التضخم الركودي؟', options:['تطبيق السياسة التوسعية فقط','تطبيق السياسة الانكماشية فقط','يصعب معالجته لأن الحلول المعتادة تتعارض مع بعضها','لا يحتاج لتدخل حكومي'], answer:2, explanation:'التضخم الركودي صعب المعالجة لأن علاج التضخم يزيد البطالة والعكس.' }
+];
+
+// ==================== DATA: CHAPTER 4 ====================
+const ch4_tf = [
+  { id:101, ch:4, type:'tf', text:'التجارة الدولية هي منفذ لتصريف الفائض من الإنتاج المحلي للخارج، مما يساعد في توفير العملة الأجنبية.', answer:true, explanation:'صحيح.' },
+  { id:102, ch:4, type:'tf', text:'من الآثار السياسية للتجارة الدولية تعميق العزلة عن الدول الأخرى.', answer:false, explanation:'تؤدي إلى إقامة علاقات صداقة مع الدول المتعامل معها، وليس العزلة.' },
+  { id:103, ch:4, type:'tf', text:'التخفيض في قيمة العملة هو حركة تلقائية تحدث نتيجة تفاعلات العرض والطلب.', answer:false, explanation:'"التخفيض" عملية مقصودة بقرار رسمي، أما "الانخفاض" هو الحركة التلقائية.' },
+  { id:104, ch:4, type:'tf', text:'سعر الصرف الحقيقي يعكس التغيرات في الأسعار النسبية بين الدولتين ويعبر عن القوة الشرائية للعملات.', answer:true, explanation:'صحيح.' },
+  { id:105, ch:4, type:'tf', text:'في نظام "أسعار الصرف المعومة" يتدخل البنك المركزي بصفة مستمرة لشراء وبيع العملات الأجنبية.', answer:false, explanation:'في هذا النظام لا يتدخل البنك المركزي، ويتحدد السعر من خلال العرض والطلب.' },
+  { id:106, ch:4, type:'tf', text:'زيادة استيراد السلع والخدمات من الخارج يُعد من محددات الطلب على الدولار.', answer:true, explanation:'صحيح.' },
+  { id:107, ch:4, type:'tf', text:'الزيادة في سعر الصرف الحقيقي تعني انخفاضاً حقيقياً في سعر الصرف مما يحسن مؤشرات التنافسية الخارجية للدولة.', answer:true, explanation:'صحيح.' },
+  { id:108, ch:4, type:'tf', text:'"التخفيض" في قيمة العملة المحلية يحدث فقط في ظل اقتصاد يسمح للسلطة النقدية بالتدخل في سوق الصرف.', answer:true, explanation:'صحيح.' },
+  { id:109, ch:4, type:'tf', text:'"العولمة السياسية" تسمح بإزالة الحدود وتقصير المسافات لجعل العالم قرية كونية واحدة.', answer:true, explanation:'صحيح.' },
+  { id:110, ch:4, type:'tf', text:'"سعر الصرف الاسمي" هو عدد وحدات العملة الوطنية التي تدفع مقابل وحدة واحدة من العملة الأجنبية.', answer:true, explanation:'صحيح.' },
+  { id:111, ch:4, type:'tf', text:'"التخفيض" في قيمة العملة (بقرار رسمي) يؤدي إلى تغيير دائم ومستمر في سعر الصرف بغض النظر عن ظروف السوق.', answer:false, explanation:'التعديل في حالة التخفيض يكون مؤقتاً ووقائياً بحسب ما تقرره السلطات النقدية.' },
+  { id:112, ch:4, type:'tf', text:'المضاربة على العملات الأجنبية وشراء العقارات الخارجية أحد محددات الطلب على الدولار.', answer:true, explanation:'صحيح.' },
+  { id:113, ch:4, type:'tf', text:'في ظل "سعر الصرف الثابت" لا يحتاج البنك المركزي للتدخل أبداً لأن سعر الصرف يصحح نفسه تلقائياً.', answer:false, explanation:'في هذا النظام يكون البنك المركزي مستعداً للتدخل بالشراء أو البيع عند عدم تعادل العرض مع الطلب.' }
+];
+
+const ch4_mc = [
+  { id:114, ch:4, type:'mc', text:'أي مما يلي يُعد من الفوائد الاقتصادية للتجارة الدولية؟', options:['تشجيع الصادرات والحصول على رأس المال الأجنبي','زيادة رفاهية الأفراد وتوسيع اختيارات المستهلك','إقامة علاقات صداقة مع الدول الأخرى','العولمة السياسية'], answer:0, explanation:'تشجيع الصادرات والحصول على رأس المال الأجنبي من الفوائد الاقتصادية.' },
+  { id:115, ch:4, type:'mc', text:'حركة تلقائية لسعر صرف العملة تحدث بدون تدخل الحكومة وتنتج عن تفاعل العرض والطلب هي:', options:['التخفيض','الانخفاض','التقييد','التعويم الكامل'], answer:1, explanation:'الانخفاض هو الحركة التلقائية.' },
+  { id:116, ch:4, type:'mc', text:'سعر تبادل العملات الأجنبية الذي يعكس القوة الشرائية للعملات ويصحح سعر الصرف الاسمي هو:', options:['سعر الصرف الحقيقي','سعر الصرف الاسمي','التخفيض','سعر الصرف المعوم'], answer:0, explanation:'سعر الصرف الحقيقي.' },
+  { id:117, ch:4, type:'mc', text:'في نظام "سعر الصرف الثابت" يكون البنك المركزي:', options:['غير متدخل تماماً','تاركاً السعر للعرض والطلب فقط','على استعداد لبيع أو شراء العملات الأجنبية عند عدم تعادل العرض والطلب','مانعاً لاستيراد السلع'], answer:2, explanation:'يتدخل عند عدم التعادل.' },
+  { id:118, ch:4, type:'mc', text:'يُعد استيراد السلع والخدمات من الخارج أحد أهم محددات:', options:['العرض على الدولار','الطلب على الدولار','التخفيض التلقائي للعملة','نظام سعر الصرف المعوم'], answer:1, explanation:'الطلب على الدولار.' },
+  { id:119, ch:4, type:'mc', text:'عملية مقصودة تتم بقرار رسمي من الحكومة لتحقيق أهداف محددة كحماية المنتج المحلي هي:', options:['الانخفاض','التخفيض','التعويم','التحرير'], answer:1, explanation:'التخفيض.' },
+  { id:120, ch:4, type:'mc', text:'من "الفوائد الاجتماعية" للتجارة الدولية:', options:['الارتقاء بالأذواق وإشباع الحاجات وتنوع الاختيارات','تشجيع الصادرات فقط','العولمة السياسية','الاستفادة من العلوم والتقنيات بأسعار مرتفعة'], answer:0, explanation:'الارتقاء بالأذواق وإشباع الحاجات وتنوع الاختيارات.' },
+  { id:121, ch:4, type:'mc', text:'"إجراءات تتدخل بها السلطات في حركة تجارتها الخارجية لتحقيق أهداف كحماية المنتج المحلي" هي:', options:['العولمة الاقتصادية','السياسة التجارية','سعر الصرف المعوم','نظام المقايضة'], answer:1, explanation:'السياسة التجارية.' },
+  { id:122, ch:4, type:'mc', text:'أي من الجمل التالية يصف "التخفيض" في قيمة العملة المحلية؟', options:['حركة تلقائية تعتمد على العرض والطلب','عملية مقصودة بقرار رسمي من الحكومة','ليس له حدود معينة','يحدث في اقتصاد حر تماماً'], answer:1, explanation:'عملية مقصودة بقرار رسمي.' },
+  { id:123, ch:4, type:'mc', text:'زيادة سعر الصرف الحقيقي يؤدي إلى:', options:['انخفاض حقيقي في سعر الصرف وتحسن مؤشرات التنافسية الخارجية','ارتفاع حقيقي في سعر الصرف وسوء التنافسية','ثبات سعر الصرف الاسمي دائماً','عدم تأثر التنافسية الخارجية'], answer:0, explanation:'انخفاض حقيقي وتحسن التنافسية.' },
+  { id:124, ch:4, type:'mc', text:'عند مقارنة "التخفيض" و"الانخفاض"، نجد أن "الانخفاض" يتميز بأنه:', options:['يتم بطلب من السلطات النقدية','له حدود معينة','حركة تلقائية نتيجة تفاعلات العرض والطلب','تعديل مؤقت ووقائي'], answer:2, explanation:'حركة تلقائية نتيجة تفاعلات العرض والطلب.' }
+];
 
 // ==================== STATE ====================
-let sections = [tfQuestions, mcQuestions, allQuestions];
-let currentSection = 0;
+let currentChapter = 3;
+let currentType = 'tf';
 let currentQuestions = [];
 let currentIndex = 0;
 let answers = {};
 let reviewMode = false;
 
-// ==================== INIT ====================
-function init() {
-  currentQuestions = [...sections[currentSection]];
+// ==================== CHAPTER LOGIC ====================
+function selectChapter(ch) {
+  currentChapter = ch;
+  document.getElementById('cardCh1').classList.toggle('active', ch === 1);
+  document.getElementById('cardCh3').classList.toggle('active', ch === 3);
+  document.getElementById('cardCh4').classList.toggle('active', ch === 4);
+  document.getElementById('mainContainer').classList.toggle('ch4-mode', ch === 4);
+  currentType = 'tf';
+  updateTabButtons();
+  startQuiz();
+}
+
+function switchType(type) {
+  currentType = type;
+  updateTabButtons();
+  startQuiz();
+}
+
+function updateTabButtons() {
+  document.getElementById('tabTF').classList.toggle('active', currentType === 'tf');
+  document.getElementById('tabMC').classList.toggle('active', currentType === 'mc');
+  document.getElementById('tabAll').classList.toggle('active', currentType === 'all');
+}
+
+function getQuestions() {
+  let tfPool, mcPool;
+  if (currentChapter === 1) { tfPool = ch1_tf; mcPool = ch1_mc; }
+  else if (currentChapter === 3) { tfPool = ch3_tf; mcPool = ch3_mc; }
+  else { tfPool = ch4_tf; mcPool = ch4_mc; }
+  if (currentType === 'tf') return [...tfPool];
+  if (currentType === 'mc') return [...mcPool];
+  return [...tfPool, ...mcPool];
+}
+
+function updateTabCounts() {
+  let tfPool, mcPool;
+  if (currentChapter === 1) { tfPool = ch1_tf; mcPool = ch1_mc; }
+  else if (currentChapter === 3) { tfPool = ch3_tf; mcPool = ch3_mc; }
+  else { tfPool = ch4_tf; mcPool = ch4_mc; }
+  document.getElementById('tabTF').textContent = `✓ صح أم خطأ (${tfPool.length})`;
+  document.getElementById('tabMC').textContent = `● اختيار متعدد (${mcPool.length})`;
+  document.getElementById('tabAll').textContent = `📋 الكل (${tfPool.length + mcPool.length})`;
+}
+
+function startQuiz() {
+  currentQuestions = getQuestions();
   currentIndex = 0;
   answers = {};
   reviewMode = false;
+  updateTabCounts();
   document.getElementById('resultsScreen').classList.remove('show');
   document.getElementById('questionsContainer').style.display = 'block';
   document.getElementById('navButtons').style.display = 'flex';
-  document.getElementById('sectionTabs').style.display = 'flex';
-  document.getElementById('statsBar').style.display = 'flex';
   renderQuestion();
   updateStats();
-}
-
-function switchSection(idx) {
-  currentSection = idx;
-  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-  init();
 }
 
 // ==================== RENDER ====================
@@ -740,37 +556,40 @@ function renderQuestion() {
   const container = document.getElementById('questionsContainer');
   const userAnswer = answers[q.id];
   const answered = userAnswer !== undefined;
-
   updateProgress();
 
-  let html = `<div class="question-card ${answered ? (isCorrect(q, userAnswer) ? 'answered-correct' : 'answered-wrong') : ''}" id="qCard">`;
+  const chNames = {1:'الأول', 3:'الثالث', 4:'الرابع'};
+  const chLabel = `الفصل ${chNames[q.ch] || q.ch}`;
+  const chClass = `ch-badge-${q.ch}`;
 
+  let html = `<div class="question-card ${answered ? (isCorrect(q, userAnswer) ? 'answered-correct' : 'answered-wrong') : ''}">`;
   html += `<div class="q-header">
     <div class="q-number">${currentIndex + 1}</div>
-    <div>
-      <span class="q-type-badge ${q.type === 'tf' ? 'badge-tf' : 'badge-mc'}">${q.type === 'tf' ? '✓ صح أم خطأ' : '● اختيار من متعدد'}</span>
+    <div style="flex:1">
+      <span class="ch-badge ${chClass}">${chLabel}</span>
+      <span class="q-type-badge ${q.type === 'tf' ? 'badge-tf' : 'badge-mc'}">${q.type === 'tf' ? '✓ صح أم خطأ' : '● اختيار متعدد'}</span>
       <div class="q-text">${q.text}</div>
     </div>
   </div>`;
 
   if (q.type === 'tf') {
-    html += `<div class="tf-buttons">`;
-    const trueClass = answered ? (userAnswer === true ? (isCorrect(q, true) ? 'selected-correct' : 'selected-wrong') : (q.answer === true ? 'reveal-correct' : '')) : '';
-    const falseClass = answered ? (userAnswer === false ? (isCorrect(q, false) ? 'selected-correct' : 'selected-wrong') : (q.answer === false ? 'reveal-correct' : '')) : '';
-    html += `<button class="tf-btn ${trueClass}" onclick="answerTF(true)" ${answered ? 'disabled' : ''}>✅ صح</button>`;
-    html += `<button class="tf-btn ${falseClass}" onclick="answerTF(false)" ${answered ? 'disabled' : ''}>❌ خطأ</button>`;
-    html += `</div>`;
+    const tClass = answered ? (userAnswer === true ? (isCorrect(q,true)?'selected-correct':'selected-wrong') : (q.answer===true?'reveal-correct':'')) : '';
+    const fClass = answered ? (userAnswer === false ? (isCorrect(q,false)?'selected-correct':'selected-wrong') : (q.answer===false?'reveal-correct':'')) : '';
+    html += `<div class="tf-buttons">
+      <button class="tf-btn ${tClass}" onclick="answerTF(true)" ${answered?'disabled':''}>✅ صح</button>
+      <button class="tf-btn ${fClass}" onclick="answerTF(false)" ${answered?'disabled':''}>❌ خطأ</button>
+    </div>`;
   } else {
+    const letters = ['أ','ب','ج','د'];
     html += `<div class="mc-options">`;
-    const letters = ['أ', 'ب', 'ج', 'د'];
     q.options.forEach((opt, i) => {
       let cls = '';
       if (answered) {
-        if (userAnswer === i) cls = isCorrect(q, i) ? 'selected-correct' : 'selected-wrong';
+        if (userAnswer === i) cls = isCorrect(q,i) ? 'selected-correct' : 'selected-wrong';
         else if (i === q.answer) cls = 'reveal-correct';
         cls += ' disabled';
       }
-      html += `<div class="mc-option ${cls}" onclick="${answered ? '' : `answerMC(${i})`}">
+      html += `<div class="mc-option ${cls}" onclick="${answered?'':` answerMC(${i})`}">
         <div class="option-letter">${letters[i]}</div>
         <div class="option-text">${opt}</div>
       </div>`;
@@ -778,11 +597,10 @@ function renderQuestion() {
     html += `</div>`;
   }
 
-  // Feedback
   if (answered) {
     const correct = isCorrect(q, userAnswer);
-    html += `<div class="feedback ${correct ? 'correct' : 'wrong'} show">
-      <span class="feedback-icon">${correct ? '✅' : '❌'}</span>
+    html += `<div class="feedback ${correct?'correct':'wrong'} show">
+      <span class="feedback-icon">${correct?'✅':'❌'}</span>
       ${correct ? '<strong>إجابة صحيحة!</strong>' : '<strong>إجابة خاطئة.</strong>'}
       ${q.explanation ? ` — ${q.explanation}` : ''}
     </div>`;
@@ -793,49 +611,34 @@ function renderQuestion() {
   container.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function isCorrect(q, ans) {
-  if (q.type === 'tf') return ans === q.answer;
-  return ans === q.answer;
-}
+function isCorrect(q, ans) { return ans === q.answer; }
 
 // ==================== ANSWER ====================
 function answerTF(val) {
   const q = currentQuestions[currentIndex];
   if (answers[q.id] !== undefined) return;
   answers[q.id] = val;
-  updateStats();
-  renderQuestion();
+  updateStats(); renderQuestion();
 }
-
 function answerMC(idx) {
   const q = currentQuestions[currentIndex];
   if (answers[q.id] !== undefined) return;
   answers[q.id] = idx;
-  updateStats();
-  renderQuestion();
+  updateStats(); renderQuestion();
 }
 
-// ==================== NAVIGATION ====================
+// ==================== NAV ====================
 function nextQuestion() {
-  if (currentIndex < currentQuestions.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  } else {
-    showResults();
-  }
+  if (currentIndex < currentQuestions.length - 1) { currentIndex++; renderQuestion(); }
+  else showResults();
 }
-
 function prevQuestion() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
+  if (currentIndex > 0) { currentIndex--; renderQuestion(); }
 }
 
 // ==================== PROGRESS ====================
 function updateProgress() {
   const total = currentQuestions.length;
-  const done = Object.keys(answers).filter(id => currentQuestions.find(q => q.id == id)).length;
   const pct = total ? Math.round((currentIndex + 1) / total * 100) : 0;
   document.getElementById('progressText').textContent = `السؤال ${currentIndex + 1} من ${total}`;
   document.getElementById('progressPct').textContent = pct + '%';
@@ -845,13 +648,9 @@ function updateProgress() {
 function updateStats() {
   const total = currentQuestions.length;
   const answered = Object.entries(answers).filter(([id]) => currentQuestions.find(q => q.id == id));
-  const correct = answered.filter(([id, ans]) => {
-    const q = currentQuestions.find(q => q.id == id);
-    return q && isCorrect(q, ans);
-  }).length;
+  const correct = answered.filter(([id, ans]) => { const q = currentQuestions.find(q=>q.id==id); return q && isCorrect(q,ans); }).length;
   const wrong = answered.length - correct;
   const pct = answered.length ? Math.round(correct / answered.length * 100) : 0;
-
   document.getElementById('statTotal').textContent = total;
   document.getElementById('statCorrect').textContent = correct;
   document.getElementById('statWrong').textContent = wrong;
@@ -862,18 +661,14 @@ function updateStats() {
 function showResults() {
   const total = currentQuestions.length;
   const answered = Object.entries(answers).filter(([id]) => currentQuestions.find(q => q.id == id));
-  const correct = answered.filter(([id, ans]) => {
-    const q = currentQuestions.find(q => q.id == id);
-    return q && isCorrect(q, ans);
-  }).length;
+  const correct = answered.filter(([id, ans]) => { const q = currentQuestions.find(q=>q.id==id); return q && isCorrect(q,ans); }).length;
   const wrong = answered.length - correct;
   const pct = total ? Math.round(correct / total * 100) : 0;
-  const deg = pct * 3.6;
 
   document.getElementById('questionsContainer').style.display = 'none';
   document.getElementById('navButtons').style.display = 'none';
   document.getElementById('resultsScreen').classList.add('show');
-  document.getElementById('resultsCircle').style.setProperty('--pct', deg + 'deg');
+  document.getElementById('resultsCircle').style.setProperty('--pct', (pct * 3.6) + 'deg');
   document.getElementById('resultsScore').textContent = pct + '%';
   document.getElementById('resCorrect').textContent = correct;
   document.getElementById('resWrong').textContent = wrong;
@@ -890,22 +685,22 @@ function showResults() {
   document.getElementById('resultsSub').textContent = `أجبت على ${answered.length} من ${total} سؤال`;
 }
 
-function restartQuiz() {
-  document.getElementById('resultsScreen').classList.remove('show');
-  init();
-}
-
+function restartQuiz() { document.getElementById('resultsScreen').classList.remove('show'); startQuiz(); }
 function reviewAnswers() {
-  reviewMode = true;
-  currentIndex = 0;
+  reviewMode = true; currentIndex = 0;
   document.getElementById('resultsScreen').classList.remove('show');
   document.getElementById('questionsContainer').style.display = 'block';
   document.getElementById('navButtons').style.display = 'flex';
   renderQuestion();
 }
+function goHome() {
+  document.getElementById('resultsScreen').classList.remove('show');
+  document.getElementById('questionsContainer').style.display = 'block';
+  document.getElementById('navButtons').style.display = 'flex';
+}
 
 // ==================== START ====================
-init();
+selectChapter(1);
 </script>
 </body>
 </html>
